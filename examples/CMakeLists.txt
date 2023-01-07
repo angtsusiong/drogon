@@ -47,7 +47,7 @@ set(example_targets
 # when the templated functions are instantiated at their point of use.
 if (CMAKE_CXX_COMPILER_ID MATCHES GNU)
     foreach(target ${example_targets})
-        target_compile_options(${target} PRIVATE -Wall -Wextra -Werror)
+        target_compile_options(${target} PRIVATE -Wall -Wextra)
     endforeach()
 endif()
 

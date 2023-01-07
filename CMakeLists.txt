@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.15)
 
 project(drogon)
 
@@ -90,15 +90,7 @@ include(CheckIncludeFileCXX)
 check_include_file_cxx(any HAS_ANY)
 check_include_file_cxx(string_view HAS_STRING_VIEW)
 check_include_file_cxx(coroutine HAS_COROUTINE)
-if (NOT "${CMAKE_CXX_STANDARD}" STREQUAL "")
-    set(DROGON_CXX_STANDARD ${CMAKE_CXX_STANDARD})
-elseif (HAS_ANY AND HAS_STRING_VIEW AND HAS_COROUTINE)
-    set(DROGON_CXX_STANDARD 20)
-elseif (HAS_ANY AND HAS_STRING_VIEW)
-    set(DROGON_CXX_STANDARD 17)
-else ()
-    set(DROGON_CXX_STANDARD 14)
-endif ()
+set(DROGON_CXX_STANDARD 20)
 
 target_include_directories(
     ${PROJECT_NAME}
@@ -492,11 +484,7 @@ execute_process(COMMAND "git" rev-parse HEAD
 configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/version.h.in"
     "${PROJECT_SOURCE_DIR}/lib/inc/drogon/version.h" @ONLY)
 
-if (DROGON_CXX_STANDARD EQUAL 20)
-    option(USE_COROUTINE "Enable C++20 coroutine support" ON)
-else (DROGON_CXX_STANDARD EQUAL 20)
-    option(USE_COROUTINE "Enable C++20 coroutine support" OFF)
-endif (DROGON_CXX_STANDARD EQUAL 20)
+option(USE_COROUTINE "Enable C++20 coroutine support" ON)
 
 if (BUILD_EXAMPLES)
     add_subdirectory(examples)
